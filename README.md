@@ -9,7 +9,7 @@ This repository contains the needed file to replicate the experiments conducted 
 
 The folder is structured as follows:
 ```
- 	|--- datasets		It contains the CrossRec dataset and results						
+ 	|--- dataset		It contains the CrossRec dataset and results						
 	|
 	|--- LTR 		This folder stores the results of the positive/negative feedback as well as the LTR implementation
 	|					
