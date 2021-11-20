@@ -1,22 +1,17 @@
 
-##  Endowing third-party libraries recommender systems with explicit user feedback mechanisms
+##  Endowing third-party libraries recommender systems with explicit user feedback mechanisms: Replication package
 
-This subfolder contains the Python implementation of the LTR model as well as the datasets used in the evaluation.
+This repository contains the needed file to replicate the experiments conducted in the paper. Furthermore, we include the data and results of [CrossRec](https://github.com/crossminer/CrossRec), the TPLs recommender systems used as the baseline. 
 
 
-## Environment setup
-To run the tool, you need to install the following python libraries:
-
- - lightfm 1.16
- - numpy 
- - pandas
 
 ## Folder structure 
 
 The folder is structured as follows:
 ```
- 	|--- datasets	It contains the data to endow additive feedback							
-	
-	|--- LTR 	This folder stores the results of the positive/negative feedback as well as the LTR implementation
-						
-	|--- tools   	It contains the implemented tools to support user feedback
+ 	|--- datasets		It contains the CrossRec dataset and results						
+	|
+	|--- LTR 		This folder stores the results of the positive/negative feedback as well as the LTR implementation
+	|					
+	|--- additive_tool   	It contains the implemented tool to support additive user feedback on top of CrossRec
+```
