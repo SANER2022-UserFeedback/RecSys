@@ -1,26 +1,13 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
 
-This is a temporary script file.
-
-"""
 import pandas as pd
-#import lightfm
 import os
 import numpy as np
 
 from scipy.sparse import coo_matrix
 from lightfm import LightFM
 from lightfm.evaluation import precision_at_k, auc_score, recall_at_k
-#import lightfm.cross_validation as eval
 from collections import defaultdict
 import collections
-
-
-
-#import itertools
-
 
 
 
@@ -162,47 +149,7 @@ def map_test_to_ids(list_projects,list_recs, folder, cutoff):
     return coo_matrix((data, (row, col)), shape=(len(row), len(col)))
 
 
-#def map_train_to_ids(list_projects, list_recs, cutoff):
-#    unique=set(list_recs) 
-#    lib_ids=np.arange(len(unique))   
-#    #libs
-#    
-#    list_lib_freqs=get_freq_rec_items(unique)   
-#    dict_lib_ids=dict(zip(unique, lib_ids))    
-#    dict_lib_freq=dict(zip(lib_ids,list_lib_freqs))    
-#    #projects
-#    
-#    proj_ids=np.arange(len(list_projects))    
-#    dict_proj_ids=dict(zip(list_projects, proj_ids))        
-#    
-#    #x= 5
-#    list_ids_rec = []
-#    list_ids_proj = []    
-#    
-#    for i in range(1,10):
-#        for f in os.listdir('D:/repositoryGitHub/CrossRec/experimental_results/CrossRec/Round'+str(i)+'/Recommendations/'):
-#                      
-#                list_ids_proj.append(dict_proj_ids.get(f))                
-#                #print("project id ",dict_proj_ids.get(f))
-#                with open('D:/repositoryGitHub/CrossRec/experimental_results/CrossRec/Round'+str(i)+'/Recommendations/'+f, 'r', encoding='utf-8', errors='ignore') as rec_file:
-#                    lines=rec_file.readlines()
-#                    #print(lines[:5])
-#                    for l in lines[:cutoff]:
-#                        splitted=l.split('\t')
-#                        lib=splitted[0].replace('#DEP#','')
-#                        #print('lib id ', dict_lib_ids.get(lib))
-#                        list_ids_rec.append(dict_lib_ids.get(lib))             
-#    
-#    
-#    row = np.repeat(list_ids_proj,cutoff)
-#    #print(row)    
-#    col = np.array(list_ids_rec)       
-#    #print(list_ids_rec)
-#    list_ratings=[]
-#    for lib_id in list_ids_rec:
-#        list_ratings.append(dict_lib_freq.get(lib_id))        
-#    data = np.array(list_ratings)    
-#    return coo_matrix((data, (row, col)), shape=(len(row), len(col)))       
+
 
 def map_train_to_ids(list_projects, list_recs, df):
     unique=set(list_recs) 
@@ -267,8 +214,7 @@ def get_test_libs(test_ratings):
     for key, value in sorted(temp_dict.items()):
         grouped_dict[value].append(key)
         
-#    for key, value in sorted(grouped_dict.items()):
-#        print(key,value)
+
         
     return grouped_dict
 
@@ -315,19 +261,7 @@ def get_ranked_recommendations(model, path_test, dict_proj, proj , dict_lib, cut
             ranks=np.argsort(-scores)
             if string_lib in results_list:
                 res_file.write( str(results_list.index(string_lib))+',')
-#            print("project id "+str(proj))
-#            print("libs rated "+ str(results_list)+'\n')
-#            print("ranking "+ str(ranks)+'\n')
-            
-            
-#            res_file.write("project id "+str(proj)+ '\n')
-#            res_file.write("crossrec ranking: \n")
-            
-            
-#            for r in results_list:                
-#                res_file.write(str(r)+'\n')
-            #res_file.write("ranking "+ str(ranks)+'\n')
-            
+
             for score, lib in zip(ranks, results_list):
                 ranked_dict.update({score:lib})
                 
@@ -337,14 +271,7 @@ def get_ranked_recommendations(model, path_test, dict_proj, proj , dict_lib, cut
             for key, value in ranked_items.items():
                 if value == string_lib:
                     res_file.write(str(key)+ '\n')
-                    #print('popularity rate '+ str(df_train[value].sum()))
-                
-#                res_file.write(str(key)+ ' '+str(value)+ '\n')
-#                res_file.write('popularity ranking ' + str(df_train[value].sum())+'\n')   
-                
-                
-                
-            #res_file.write('='*300+ '\n')    
+ 
             
             
         return 
@@ -425,10 +352,7 @@ for rank in ranks:
         for test_file in os.listdir(test_path):      
     
             ranked_items=get_ranked_recommendations(model, test_path+test_file, map_projects,test_file, map_lib, cutoff, df_train, results_path, lib_to_check)   
-    #        for key, value in ranked_items.items():
-    #            print(key,value)
-    #            print('popularity ranking', df_train[value].sum())
-    #     
+
     
     
     
@@ -466,7 +390,18 @@ def evaluate_ranks_positive(folder):
     
     #print(df_rank_0.iloc[:,8:].sum()/df_rank_0.shape[0])
     df_rank_0.to_csv(folder+'merged_results.csv', index=False)
+
+
+def compute_metrics(csv_results):
+
+    df_results=pd.read_csv(csv_results)
+    print(df_results.iloc[:,8:].sum()/df_results.shape[0])
     
+    print(df_results['rate_1200'].mean())
+    print(df_results.shape[0]/1180)
+
+
+
 def evaluate_ranks_negative(folder): 
     
     df_rank_0=pd.read_csv(folder+'rank_comparison_1200.csv', names=['crossrec_rate','rate_1200'])      
@@ -502,33 +437,12 @@ def evaluate_ranks_negative(folder):
     
     #print(df_rank_0.iloc[:,8:].sum()/df_rank_0.shape[0])
     df_rank_0.to_csv(folder+'merged_results_negative.csv', index=False)
-    
-#    
-#    
-#    
-#    #list_dfs=[df_rank_0, df_rank_20,df_rank_40,df_rank_60,df_rank_200,df_rank_600,df_rank_1000]
-#    
-#    df_rank_0.reset_index()
-#
-#    merged_df=pd.merge(df_rank_0, df_rank_20, how='outer', on='crossrec_rate')
-##    merged_df_part2=pd.merge(merged_df_part1, df_rank_40, how='left', on='crossrec_rate')
-##    merged_df_part3=pd.merge(merged_df_part2, df_rank_60, how='left', on='crossrec_rate')
-#    print(df_rank_0.shape)
-#    print(merged_df.shape)
-    
-def compute_metrics(csv_results):
 
-    df_results=pd.read_csv(csv_results)
-    print(df_results.iloc[:,8:].sum()/df_results.shape[0])
-    
-    print(df_results['rate_1200'].mean())
-    print(df_results.shape[0]/1180)
         
 
-#
-cutoff=20
-lib_folder='junit'            
-#evaluate_ranks_negative(results_folder)
+
+        
+evaluate_ranks_negative(results_folder)
 compute_metrics('C:/Users/claudio/Desktop/Spyder_folder/results_rank_negative/cutoff_'+
                 str(cutoff)+'/'+lib_folder+'/merged_results_negative.csv')                            
     
