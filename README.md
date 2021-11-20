@@ -15,8 +15,8 @@ To run the tool, you need to install the following python libraries:
 
 The folder is structured as follows:
 ```
- 	|--- datasets		It contains the data to endow additive feedback							
+ 	|--- datasets	It contains the data to endow additive feedback							
 	
-	|--- LTR 		This folder stores the results of the positive/negative feedback as well as the LTR implementation
+	|--- LTR 	This folder stores the results of the positive/negative feedback as well as the LTR implementation
 						
 	|--- tools   	It contains the implemented tools to support user feedback
