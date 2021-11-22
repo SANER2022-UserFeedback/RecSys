@@ -1,4 +1,4 @@
-package it.univaq.disim.CrossRec;
+package additivefeedback.crossrec.injector;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
